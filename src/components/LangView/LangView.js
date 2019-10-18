@@ -17,6 +17,18 @@ class LanguageView extends Component{
                 console.log('error in /api/langauges/', error)
             })
         }
+    deleteLanguage = () =>{
+        Axios.delete('/api/languages/' + [this.props.match.params.id])
+        .then((response)=>{
+            console.log('get: /api/languages', response)
+            this.setState({
+                Language: response.data[0]
+            })
+        }).catch((error)=>{
+            console.log('error in /api/langauges/', error)
+        })
+    }
+    
 
 
     componentDidMount(){
@@ -31,6 +43,8 @@ class LanguageView extends Component{
         <h3>{this.state.Language.comfort}</h3>
         <h2>Notes</h2>
         <h3> {this.state.Language.notes}</h3>
+        <br></br>
+        <button onClick={this.deleteLanguage}>Delete</button>
         </div>
         )
     }

@@ -21,19 +21,28 @@ router.get('/:id', (req, res) => {
             res.sendStatus(500);
         })
     });
-    
+
+    router.delete('/:id', (req, res)=> {
+        const queryText = 'DELETE FROM language WHERE id=$1';
+        pool.query(queryText, [req.params.id])
+        .then(() => { res.sendStatus(200); })
+    .catch((err) => {
+      console.log('Error completing SELECT plant query', err);
+      res.sendStatus(500);
+    });
+    })
 
 router.post('/', (req, res) => {
     const newLanguage = req.body;
-    const queryText = `INSERT INTO language ("name", "comfort", "notes")
-                      VALUES ($1, $2, $3 );`;
+    const queryText = `INSERT INTO language ("name", "comfort", "notes", "user_id")
+                      VALUES ($1, $2, $3, $4);`;
     const queryValues = [
       newLanguage.name,
       newLanguage.comfort,
       newLanguage.notes,
+      newLanguage.user,
     ];
     console.log(newLanguage)
-    console.log(queryValues)
     pool.query(queryText, queryValues)
       .then(() => { res.sendStatus(201); })
       .catch((err) => {
