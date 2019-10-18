@@ -24,9 +24,16 @@ class NewLanguageForm extends Component{
     }
     addNewLanguage = event => {
         event.preventDefault();
-        Axios.post('/api/languages')
+        Axios.post('/api/languages/', this.state.newLanguage )
         .then((response)=>{
-            
+            console.log(response)
+            this.setState({
+                newLanguage: {
+                    name: '',
+                    comfort: '',
+                    notes: '',
+                }
+            })
         })
     }
 

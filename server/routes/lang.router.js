@@ -32,6 +32,8 @@ router.post('/', (req, res) => {
       newLanguage.comfort,
       newLanguage.notes,
     ];
+    console.log(newLanguage)
+    console.log(queryValues)
     pool.query(queryText, queryValues)
       .then(() => { res.sendStatus(201); })
       .catch((err) => {
