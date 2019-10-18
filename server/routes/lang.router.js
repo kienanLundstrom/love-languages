@@ -22,11 +22,22 @@ router.get('/:id', (req, res) => {
         })
     });
     
-/**
- * POST route template
- */
-router.post('/', (req, res) => {
 
-});
+router.post('/', (req, res) => {
+    const newLanguage = req.body;
+    const queryText = `INSERT INTO language ("name", "comfort", "notes")
+                      VALUES ($1, $2, $3 );`;
+    const queryValues = [
+      newLanguage.name,
+      newLanguage.comfort,
+      newLanguage.notes,
+    ];
+    pool.query(queryText, queryValues)
+      .then(() => { res.sendStatus(201); })
+      .catch((err) => {
+        console.log('Error completing SELECT language query', err);
+        res.sendStatus(500);
+      });
+  });
 
 module.exports = router;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
 import LangItem from '../LangItem/LangItem';
-
+import { withRouter } from 'react-router-dom';
 
 
 class LangList extends Component{
@@ -32,9 +32,9 @@ componentDidMount(){
                     />
                 )}
                 <br></br>
-                <button>+ New Language</button>
+                <button onClick={()=>this.props.history.push(`/addNewLanguage`)}>+ New Language</button>
         </div>
         )
     }
 }
-export default LangList;
+export default withRouter(LangList);

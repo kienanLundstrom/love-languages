@@ -16,6 +16,7 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute'
 import LanguageView from '../LangView/LangView';
 import './App.css';
 import LangList from '../LanguageList/LanguageList';
+import NewLanguageForm from '../NewLanguageForm/NewLanguageForm';
 
 class App extends Component {
   componentDidMount () {
@@ -48,6 +49,11 @@ class App extends Component {
               exact
               path="/languages/:id"
               render={({match})=><LanguageView match={match}/>}/>
+            />
+            <ProtectedRoute
+              exact
+              path="/addNewLanguage"
+              component={NewLanguageForm}
             />
             {/* If none of the other routes matched, we will show a 404. */}
             <Route render={() => <h1>404</h1>} />
