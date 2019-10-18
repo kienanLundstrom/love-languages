@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Axios from 'axios';
+import { withRouter } from 'react-router-dom';
 
 class LanguageView extends Component{
    state = {
@@ -18,15 +19,8 @@ class LanguageView extends Component{
             })
         }
     deleteLanguage = () =>{
-        Axios.delete('/api/languages/' + [this.props.match.params.id])
-        .then((response)=>{
-            console.log('get: /api/languages', response)
-            this.setState({
-                Language: response.data[0]
-            })
-        }).catch((error)=>{
-            console.log('error in /api/langauges/', error)
-        })
+       this.props.dispatch({ type: 'DELETE_LANGUAGES', payload: this.props.match.params.id})
+        this.props.history.push('/')
     }
     
 
@@ -54,4 +48,4 @@ const mapStateToProps = reduxState => ({
     reduxState,
   });
   
-  export default connect(mapStateToProps)(LanguageView);
+  export default withRouter(connect(mapStateToProps)(LanguageView));

@@ -1,9 +1,16 @@
-const languagesReducer = (state=[], action)=>{
+import { combineReducers } from 'redux';
+
+
+
+
+const setLanguageReducer = (state=[], action)=>{
     switch(action.type){
-        case 'FETCH_LANGUAGES':
+        case 'SET_LANGUAGES':
           return action.payload
         default:
           return state
       }
 }
-export default languagesReducer;
+export default combineReducers({
+    setLanguageReducer,
+});

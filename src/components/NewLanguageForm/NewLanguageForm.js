@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Axios from 'axios';
 
 
 
@@ -24,17 +23,8 @@ class NewLanguageForm extends Component{
     }
     addNewLanguage = event => {
         event.preventDefault();
-        Axios.post('/api/languages/', this.state.newLanguage )
-        .then((response)=>{
-            console.log(response)
-            this.setState({
-                newLanguage: {
-                    name: '',
-                    comfort: '',
-                    notes: '',
-                }
-            })
-        })
+        this.props.dispatch({ type: 'POST_LANGUAGES', payload: this.state.newLanguage})
+        this.props.history.push('/');
     }
 
 

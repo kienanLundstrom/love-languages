@@ -1,23 +1,13 @@
 import React, { Component } from 'react';
-import Axios from 'axios';
 import LangItem from '../LangItem/LangItem';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 
 class LangList extends Component{
-    state = {
-        langList : [],
-    }
+    
     getLang = () =>{
-    Axios.get('/api/languages')
-        .then((response)=>{
-            console.log('get: /api/languages', response)
-            this.setState({
-                langList: response.data
-            })
-        }).catch((error)=>{
-            console.log('error in /api/langauges/', error)
-        })
+        this.props.dispatch({ type: 'FETCH_LANGUAGES'})
     }
 componentDidMount(){
     this.getLang();
@@ -25,7 +15,7 @@ componentDidMount(){
     render(){
         return(
         <div>
-                {this.state.langList.map((lang)=>
+                {this.props.reduxState.language.setLanguageReducer.map((lang)=>
                     <LangItem
                     lang={lang}
                     getLang={this.getLang}
@@ -37,4 +27,7 @@ componentDidMount(){
         )
     }
 }
-export default withRouter(LangList);
+const mapStateToProps = reduxState => ({
+    reduxState,
+});
+export default withRouter(connect(mapStateToProps)(LangList));
