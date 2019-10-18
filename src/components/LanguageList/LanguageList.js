@@ -31,6 +31,8 @@ componentDidMount(){
                     getLang={this.getLang}
                     />
                 )}
+                <br></br>
+                <button>+ New Language</button>
         </div>
         )
     }
