@@ -21,6 +21,7 @@ function* postLanguages(action){
 function* updateLanguage(action){
     try {
       yield Axios.put('/api/languages', action.payload);
+      yield put({type: 'FETCH_LANGUAGES'})
       console.log('PUT REQ:',action.payload)
     } catch (err){
       console.log('PUT ERROR:',err);
@@ -36,13 +37,14 @@ function* deleteLanguages(action){
 }
 
 
+
+
 function* languageSaga(){
     try{ 
         yield takeLatest('FETCH_LANGUAGES', fetchLanguages)
         yield takeLatest('POST_LANGUAGES', postLanguages)
         yield takeLatest('DELETE_LANGUAGES', deleteLanguages)
         yield takeLatest('UPDATE_LANGUAGE', updateLanguage);
-
     }catch (error){
         console.log(error)
     }

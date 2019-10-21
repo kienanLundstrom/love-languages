@@ -6,9 +6,11 @@ import Axios from 'axios';
 class EditLanguage extends Component{
 
     state = {
-        Language: {},
+        Language: { },
     }
+ 
      getLanguage = () =>{
+         this.props.dispatch({ type: 'ONE_LANGUAGE', payload: this.props.match.params.id })
          Axios.get('/api/languages/' + [this.props.match.params.id])
              .then((response)=>{
                  console.log('get: /api/languages', response)
@@ -19,6 +21,7 @@ class EditLanguage extends Component{
                  console.log('error in /api/langauges/', error)
              })
          }
+
 componentDidMount(){
     this.getLanguage();
 }
@@ -31,12 +34,14 @@ handleChange = (event, propertyName ) =>{
             [propertyName]: event.target.value,
         }
     })
-    console.log(this.state.Language)
 }
 handleSubmit = () =>{
+    if(window.confirm('Are you sure you want to make these changes?')){
     this.props.dispatch({ type: 'UPDATE_LANGUAGE', payload: this.state.Language}); 
-        console.log('In submit');
+    this.props.history.push(`/edit/${this.props.match.params.id}`)
+    }
 }
+
     render(){
         return(
             <div>
@@ -50,6 +55,7 @@ handleSubmit = () =>{
                 <input onChange={(event)=>this.handleChange( event, 'notes' )} value={this.state.Language.notes}/>
                 <br></br>
                 <button onClick = {this.handleSubmit}>Submit Changes</button>
+                <button onClick={()=>this.props.history.push(`/languages/${this.state.Language.id}`)}>Back</button>
             </div>
         )
     }

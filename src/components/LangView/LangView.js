@@ -45,9 +45,7 @@ class LanguageView extends Component{
         <br></br>
         <button onClick={this.deleteLanguage}>Delete</button>
         <br></br>
-        <button onClick={this.edit}>Edit</button>
-        <p>{JSON.stringify(this.props.reduxState.infoPlants)}</p>
-
+        <button onClick={this.edit} >Edit</button>
         </div>
         )
     }
