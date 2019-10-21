@@ -46,9 +46,28 @@ router.post('/', (req, res) => {
     pool.query(queryText, queryValues)
       .then(() => { res.sendStatus(201); })
       .catch((err) => {
-        console.log('Error completing SELECT language query', err);
+        console.log('Error completing SELECT language1 query', err);
         res.sendStatus(500);
       });
   });
 
+  router.put('/', (req, res) => {
+    const updatedLanguage = req.body;
+  
+    const queryText = `UPDATE language SET "name" = $1, "comfort" = $2, "notes" = $3 WHERE id=$4;`;
+  
+    const queryValues = [
+        updatedLanguage.name,
+        updatedLanguage.comfort,
+        updatedLanguage.notes,
+        updatedLanguage.id,
+    ];
+  
+    pool.query(queryText, queryValues)
+      .then(() => { res.sendStatus(200); })
+      .catch((err) => {
+        console.log('Error completing SELECT languages2 query', err);
+        res.sendStatus(500);
+      });
+  });
 module.exports = router;

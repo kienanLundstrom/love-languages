@@ -19,8 +19,13 @@ class LanguageView extends Component{
             })
         }
     deleteLanguage = () =>{
+        if(window.confirm('Are you sure you want to delete?')){
        this.props.dispatch({ type: 'DELETE_LANGUAGES', payload: this.props.match.params.id})
         this.props.history.push('/')
+        }
+    }
+    edit = () =>{
+        this.props.history.push(`/edit/${this.props.match.params.id}`);
     }
     
 
@@ -39,6 +44,10 @@ class LanguageView extends Component{
         <h3> {this.state.Language.notes}</h3>
         <br></br>
         <button onClick={this.deleteLanguage}>Delete</button>
+        <br></br>
+        <button onClick={this.edit}>Edit</button>
+        <p>{JSON.stringify(this.props.reduxState.infoPlants)}</p>
+
         </div>
         )
     }
