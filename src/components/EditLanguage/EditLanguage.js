@@ -46,13 +46,18 @@ handleSubmit = () =>{
         return(
             <div>
                 <p>Name</p>
-                <input onChange={(event)=>this.handleChange( event, 'name' )} value={this.state.Language.name}/>
+                <textarea onChange={(event)=>this.handleChange( event, 'name' )} value={this.state.Language.name}/>
                 <br></br>
                 <p>Comfort</p>
-                <input onChange={(event)=>this.handleChange( event, 'comfort' )} value={this.state.Language.comfort}/>
+                {/* <textarea onChange={(event)=>this.handleChange( event, 'comfort' )} value={this.state.Language.comfort}/> */}
+                <select value={this.state.Language.comfort} onChange={(event)=>this.handleChange(event, 'comfort')}>
+                        <option value='1'>Not very Comfortable</option>
+                        <option value='2'>Comfortable</option>
+                        <option value='3'>Very Comfortable</option>
+                    </select>
                 <br></br>
                 <p>Notes</p>
-                <input onChange={(event)=>this.handleChange( event, 'notes' )} value={this.state.Language.notes}/>
+                <textarea onChange={(event)=>this.handleChange( event, 'notes' )} value={this.state.Language.notes}/>
                 <br></br>
                 <button onClick = {this.handleSubmit}>Submit Changes</button>
                 <button onClick={()=>this.props.history.push(`/languages/${this.state.Language.id}`)}>Back</button>

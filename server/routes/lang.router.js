@@ -12,15 +12,18 @@ pool.query(`SELECT * FROM "language";`).then((result)=>{
         res.sendStatus(500);
     })
 });
+
+
 router.get('/:id', (req, res) => {
     // find all languages and return them
     pool.query(`SELECT * FROM "language" where "id" = $1;`, [req.params.id]).then((result)=>{
         res.send(result.rows);
         }).catch((error)=>{
-            console.log('error in getLangRouter', error)
+            console.log('error in getLangRouter123', error)
             res.sendStatus(500);
         })
     });
+  
 
     router.delete('/:id', (req, res)=> {
         const queryText = 'DELETE FROM language WHERE id=$1';
