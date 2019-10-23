@@ -30,7 +30,7 @@ router.get('/:id', (req, res) => {
         pool.query(queryText, [req.params.id])
         .then(() => { res.sendStatus(200); })
     .catch((err) => {
-      console.log('Error completing SELECT plant query', err);
+      console.log('Error completing language delete query', err);
       res.sendStatus(500);
     });
     })

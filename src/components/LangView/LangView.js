@@ -31,8 +31,9 @@ class LanguageView extends Component{
         })
     }
     deleteLanguage = () =>{
-        if(window.confirm('Are you sure you that like you totally want to delete this?')){
-       this.props.dispatch({ type: 'DELETE_LANGUAGES', payload: this.props.match.params.id})
+    if(window.confirm('Are you sure you that like you totally want to delete this?')){
+        this.props.dispatch({ type: 'DELETE_LINK', payload: this.props.match.params.id})
+        this.props.dispatch({ type: 'DELETE_LANGUAGES', payload: this.props.match.params.id})
         this.props.history.push('/')
         }
     }
@@ -40,6 +41,7 @@ class LanguageView extends Component{
 
         if(window.confirm('Are you sure you that like you totally want to delete this?')){
         this.props.dispatch({ type: 'DELETE_LINK', payload: this.props.reduxState.language.setLink[i].id})
+        this.props.history.push('/')
         }
     }
     edit = () =>{

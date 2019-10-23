@@ -8,9 +8,9 @@ class LangItem extends Component{
 
         return(
             <Router>
-        <Card.Group>
+        <Card.Group centered>
            
-          <Card onClick={()=>this.props.history.push(`/languages/${this.props.lang.id}`)}
+        <Card onClick={()=>this.props.history.push(`/languages/${this.props.lang.id}`)}
                 header={this.props.lang.name}
                 meta = {this.props.lang.comfort}  />
         </Card.Group>
