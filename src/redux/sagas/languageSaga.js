@@ -55,6 +55,7 @@ function* deleteLanguages(action){
 
 function* deleteLink(action){
     try{
+        console.log('ligma  balls', action)
         yield Axios.delete('/api/links/' + action.payload)
     }catch (error){
         console.log(error)

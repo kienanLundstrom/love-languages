@@ -30,7 +30,7 @@ router.post('/', (req, res) => {
 })
 
 router.delete('/:id', (req, res)=> {
-    const queryText = 'DELETE FROM link WHERE lang_id=$1';
+    const queryText = 'DELETE FROM link WHERE "id"=$1;';
     console.log('delete req.params', req.params.id)
     pool.query(queryText, [req.params.id])
     .then(() => { res.sendStatus(200); })
