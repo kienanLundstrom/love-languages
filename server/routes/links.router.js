@@ -3,10 +3,9 @@ const pool = require('../modules/pool');
 const router = express.Router();
 
 router.get('/:id', (req, res)=>{
-    const queryText = `SELECT * FROM "link" WHERE "lang_id" = ${req.params.id};`;
-    pool.query(queryText).then((result)=>{
+    const queryText = `SELECT * FROM "link" WHERE "lang_id" = $1;`;
+    pool.query(queryText, [req.params.id]).then((result)=>{
         res.send(result.rows);
-        console.log('link get result rows console', result.rows)
     }).catch((error)=>{
         console.log('error in get link router', error)
         res.sendStatus(500);
@@ -28,5 +27,16 @@ router.post('/', (req, res) => {
         console.log('error in router . post for links', err);
         res.sendStatus(500);
       });
+})
+
+router.delete('/:id', (req, res)=> {
+    const queryText = 'DELETE FROM link WHERE lang_id=$1';
+    console.log('delete req.params', req.params.id)
+    pool.query(queryText, [req.params.id])
+    .then(() => { res.sendStatus(200); })
+.catch((err) => {
+    console.log(err)
+    res.sendStatus(500);
+});
 })
 module.exports = router;

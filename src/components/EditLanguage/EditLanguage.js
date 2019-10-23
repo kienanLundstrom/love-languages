@@ -61,7 +61,7 @@ handleSubmit = () =>{
                 <p>Notes</p>
                 <textarea onChange={(event)=>this.handleChange( event, 'notes' )} value={this.state.Language.notes}/>
                 <br></br>
-
+                <textarea onChange={(event)=>this.handleChange( event, 'links' )} value={this.state.Language.links}/>
                 <button onClick = {this.handleSubmit}>Submit Changes</button>
                 <button onClick={()=>this.props.history.push(`/languages/${this.state.Language.id}`)}>Back</button>
             </div>

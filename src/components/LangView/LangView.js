@@ -36,6 +36,9 @@ class LanguageView extends Component{
         this.props.history.push('/')
         }
     }
+    deleteLink = () =>{
+        this.props.dispatch({ type: 'DELETE_LINK', payload: this.props.match.params.id})
+    }
     edit = () =>{
         this.props.history.push(`/edit/${this.props.match.params.id}`);
     }
@@ -73,7 +76,7 @@ class LanguageView extends Component{
         <button onClick={this.addNewLink}>Add Link +</button>
         <ul>
             {this.props.reduxState.language.setLink.map((link)=>{
-                return <li><a href={link.links}>{link.links}</a></li>
+                return <li><a href={link.links}>{link.links}</a><button onClick={this.deleteLink}>Delete</button></li>
             })}
         </ul>
         <button onClick={this.deleteLanguage}>Delete</button>
