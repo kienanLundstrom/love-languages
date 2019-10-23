@@ -8,10 +8,10 @@ class NewLanguageForm extends Component{
     state = {
         newLanguage: {
             name: '',
-            comfort: '',
+            comfort: '1',
             notes: '',
             user: this.props.reduxState.user.id,
-        }
+        },
     }
     handleNameChange = (event, propertyName) => {
         this.setState({
@@ -21,6 +21,8 @@ class NewLanguageForm extends Component{
             }
         });
     }
+    
+ 
     addNewLanguage = event => {
         event.preventDefault();
         this.props.dispatch({ type: 'POST_LANGUAGES', payload: this.state.newLanguage})
@@ -36,7 +38,7 @@ class NewLanguageForm extends Component{
                     <input type='text' placeholder="Name of language" value={this.state.newLanguage.name} onChange={(event)=>this.handleNameChange(event, 'name')}/>
                     {/* <input type='select' placeholder="Comfort Level 1-3" value={this.state.newLanguage.comfort} onChange={(event)=>this.handleNameChange(event, 'comfort')}/> */}
                     <select defaultValue='1' onChange={(event)=>this.handleNameChange(event, 'comfort')}>
-                        <option value='1'>Not very Comfortable</option>
+                        <option value='1'  selected='selected'>Not very Comfortable</option>
                         <option value='2'>Comfortable</option>
                         <option value='3'>Very Comfortable</option>
                     </select>

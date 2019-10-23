@@ -7,6 +7,11 @@ class LanguageView extends Component{
    state = {
        Language: {},
        Links: {},
+       newLink: {
+           link: '',
+           lang_id: this.props.match.params.id,
+           user_id: this.props.reduxState.user.id,
+       }
    }
     getLanguage = () =>{
         Axios.get('/api/languages/' + [this.props.match.params.id])
@@ -34,7 +39,19 @@ class LanguageView extends Component{
     edit = () =>{
         this.props.history.push(`/edit/${this.props.match.params.id}`);
     }
-    
+    handleNameChange = (event, propertyName) => {
+        this.setState({
+            newLink: {
+                ...this.state.newLink,
+                [propertyName]: event.target.value, 
+            }
+        });
+    }
+    addNewLink = event => {
+        event.preventDefault();
+        this.props.dispatch({ type: 'POST_LINKS', payload: this.state.newLink})
+        this.props.history.push('/');
+    }
 
 
     componentDidMount(){
@@ -52,6 +69,8 @@ class LanguageView extends Component{
         <h3> {this.state.Language.notes}</h3>
         <br></br>
         <h3>Useful Links</h3>
+        <input type='text' placeholder="Add A Link" value={this.state.newLink.link} onChange={(event)=>this.handleNameChange(event, 'link')}/>
+        <button onClick={this.addNewLink}>Add Link +</button>
         <ul>
             {this.props.reduxState.language.setLink.map((link)=>{
                 return <li><a href={link.links}>{link.links}</a></li>

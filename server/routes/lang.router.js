@@ -49,7 +49,7 @@ router.post('/', (req, res) => {
     pool.query(queryText, queryValues)
       .then(() => { res.sendStatus(201); })
       .catch((err) => {
-        console.log('Error completing SELECT language1 query', err);
+        console.log('error in router . post for languages', err);
         res.sendStatus(500);
       });
   });

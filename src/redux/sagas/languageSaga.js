@@ -18,6 +18,16 @@ function* fetchLinks(action){
     }
 }
 
+function* postLinks(action){
+    try{
+        yield Axios.post('/api/links', action.payload)
+        console.log('postLinks console', action.payload)
+        yield put({ type: 'FETCH_LINKS'})
+    }catch (error){
+        console.log(error)
+    }
+}
+
 function* postLanguages(action){
     try{
         yield Axios.post('/api/languages', action.payload)
@@ -51,9 +61,10 @@ function* languageSaga(){
     try{ 
         yield takeLatest('FETCH_LANGUAGES', fetchLanguages)
         yield takeLatest('FETCH_LINKS', fetchLinks)
+        yield takeLatest('POST_LINKS', postLinks)
         yield takeLatest('POST_LANGUAGES', postLanguages)
         yield takeLatest('DELETE_LANGUAGES', deleteLanguages)
-        yield takeLatest('UPDATE_LANGUAGE', updateLanguage);
+        yield takeLatest('UPDATE_LANGUAGE', updateLanguage)
     }catch (error){
         console.log(error)
     }

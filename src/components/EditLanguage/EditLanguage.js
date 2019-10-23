@@ -8,6 +8,8 @@ class EditLanguage extends Component{
     state = {
         Language: { },
     }
+
+
  
      getLanguage = () =>{
          this.props.dispatch({ type: 'ONE_LANGUAGE', payload: this.props.match.params.id })
@@ -59,6 +61,7 @@ handleSubmit = () =>{
                 <p>Notes</p>
                 <textarea onChange={(event)=>this.handleChange( event, 'notes' )} value={this.state.Language.notes}/>
                 <br></br>
+
                 <button onClick = {this.handleSubmit}>Submit Changes</button>
                 <button onClick={()=>this.props.history.push(`/languages/${this.state.Language.id}`)}>Back</button>
             </div>
