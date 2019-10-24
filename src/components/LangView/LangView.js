@@ -66,29 +66,45 @@ class LanguageView extends Component{
         this.getLanguage();
         this.getLinks();
     }
+    componentDidUpdate(prevProps){
+        if(this.props.reduxState !== prevProps.reduxState){
+            console.log('checking component did Update')
+            this.getLanguage();
+            this.getLinks();
+        }
+    }
     render(){
         return(
         <div>
-        <p>{JSON.stringify(this.state.Language)}</p>
-        <h1>{this.state.Language.name}</h1>
+            <div class="ui container">
+                <h1 class="ui header">{this.state.Language.name}</h1>
+            </div> 
+        <div class="ui segment">
         <h2>Comfort Level</h2>
         <h3>{this.state.Language.comfort}</h3>
+        </div>
+        <div class="ui segment">
         <h2>Notes</h2>
         <h3> {this.state.Language.notes}</h3>
+        </div>
         <br></br>
+        <div class="ui segment">
         <h3>Useful Links</h3>
         <input type='text' placeholder="Add A Link" value={this.state.newLink.link} onChange={(event)=>this.handleNameChange(event, 'link')}/>
         <button onClick={this.addNewLink}>Add Link +</button>
-        <ul>
+        </div>
+        
+        <div class="ui link list">
             {this.props.reduxState.language.setLink.map((link, index)=>{
-                return <li><a href={link.links}>{link.links}</a><button onClick={()=>{this.deleteLink(index)}}>Delete</button></li>
+                return <div class="active item"><a class="huge item">{link.links}</a><button class="ui negative button" onClick={()=>{this.deleteLink(index)}}>Delete</button></div>
             })}
-        </ul>
-        <button onClick={this.deleteLanguage}>Delete</button>
+        </div>
+        <button class="ui fluid button" onClick={()=>{this.props.history.push('/')}}>Back</button>
         <br></br>
-        <button onClick={this.edit} >Edit</button>
+        <button class="ui primary fluid button" onClick={this.edit} >Edit</button>
         <br></br>
-        <button onClick={()=>{this.props.history.push('/')}}>Back</button>
+        <button class="ui negative fluid button" onClick={this.deleteLanguage}>Delete</button>
+
         </div>
         )
     }

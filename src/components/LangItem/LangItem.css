@@ -1,0 +1,12 @@
+.ui.segment{
+    width: 50%;
+}
+.ui.cards>.card>.content>.header:not(.ui) {
+    line-height: 150px;
+    text-align: center;
+}
+.ui.card, .ui.cards>.card{
+    width: 250px;
+    height: 250px;
+    flex-direction: row;
+}

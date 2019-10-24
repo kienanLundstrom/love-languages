@@ -40,7 +40,8 @@ handleChange = (event, propertyName ) =>{
 handleSubmit = () =>{
     if(window.confirm('Are you sure you want to make these changes?')){
     this.props.dispatch({ type: 'UPDATE_LANGUAGE', payload: this.state.Language}); 
-    this.props.history.push(`/edit/${this.props.match.params.id}`)
+    // this.props.history.push(`/edit/${this.props.match.params.id}`)
+    this.props.history.push(`/languages/${this.state.Language.id}`)
     }
 }
 
