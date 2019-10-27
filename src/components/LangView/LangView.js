@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Axios from 'axios';
 import { withRouter } from 'react-router-dom';
+import { Segment } from 'semantic-ui-react';
+import './LangView.css';
 
 class LanguageView extends Component{
    state = {
@@ -58,7 +60,15 @@ class LanguageView extends Component{
             }
         });
     }
-
+    comfortString =(string) =>{
+        if(string===1){
+            return 'Not very comfortable'
+        } else if(string===2){
+            return 'Comfortable'
+        } else if (string===3){
+            return 'Love language'
+        }
+    }
 
 
     componentDidMount(){
@@ -68,28 +78,34 @@ class LanguageView extends Component{
   
     render(){
         return(
-        <div>
-            <div class="ui container">
+        <div className='langInfo'>
+            <Segment inverted textAlign='center'>
                 <h1 class="ui header">{this.state.Language.name}</h1>
-            </div> 
-        <div class="ui segment">
-        <h2>Comfort Level</h2>
-        <h3>{this.state.Language.comfort}</h3>
-        </div>
-        <div class="ui segment">
-        <h2>Notes</h2>
-        <h3> {this.state.Language.notes}</h3>
-        </div>
+            </Segment>
+        <Segment inverted textAlign='center'>
+        <h3>Comfort Level</h3>
+        <h4>{this.comfortString(this.state.Language.comfort)}</h4>
+        </Segment>
+        
+        <Segment inverted textAlign='center'>
+        <h3>Notes</h3>
+        <h5> {this.state.Language.notes}</h5>
+        </Segment>
         <br></br>
+
+        <div className='links'>
         <h3>Useful Links</h3>
         <input type='text' placeholder="Add A Link" value={this.state.newLink.link} onChange={(event)=>this.handleNameChange(event, 'link')}/>
         <button onClick={this.addNewLink}>Add Link +</button>
+        </div>
+
+        <div className='buttons'>
+        <button class="ui button" onClick={()=>{this.props.history.push('/')}}>Back</button>
         
-        <button class="ui fluid button" onClick={()=>{this.props.history.push('/')}}>Back</button>
-        <br></br>
-        <button class="ui primary fluid button" onClick={this.edit} >Edit</button>
-        <br></br>
-        <button class="ui negative fluid button" onClick={this.deleteLanguage}>Delete</button>
+        <button class="ui primary button" onClick={this.edit} >Edit</button>
+        
+        <button class="ui negative button" onClick={this.deleteLanguage}>Delete</button>
+        </div>
         </div>
         )
     }

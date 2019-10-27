@@ -19,7 +19,7 @@ router.get('/:id', (req, res) => {
     pool.query(`SELECT * FROM "language" where "id" = $1;`, [req.params.id]).then((result)=>{
         res.send(result.rows);
         }).catch((error)=>{
-            console.log('error in getLangRouter123', error)
+            console.log('select all from language error', error)
             res.sendStatus(500);
         })
     });

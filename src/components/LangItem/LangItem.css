@@ -1,5 +1,7 @@
 .ui.segment{
     width: 50%;
+    margin: 20px auto;
+    padding: 30px;
 }
 .ui.cards>.card>.content>.header:not(.ui) {
     line-height: 150px;
@@ -9,4 +11,7 @@
     width: 250px;
     height: 250px;
     flex-direction: row;
+}
+.meta{
+    text-align: center;
 }
