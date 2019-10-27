@@ -11,8 +11,15 @@ class LanguageView extends Component{
            link: '',
            lang_id: this.props.match.params.id,
            user_id: this.props.reduxState.user.id,
-       }
+       },
+
    }
+   addNewLink = event => {
+    event.preventDefault();
+    this.props.dispatch({ type: 'POST_LINKS', payload: this.state.newLink})
+    this.props.history.push('/');
+}
+
     getLanguage = () =>{
         Axios.get('/api/languages/' + [this.props.match.params.id])
             .then((response)=>{
@@ -37,13 +44,9 @@ class LanguageView extends Component{
         this.props.history.push('/')
         }
     }
-    deleteLink = (i) =>{
 
-        if(window.confirm('Are you sure you that like you totally want to delete this?')){
-        this.props.dispatch({ type: 'DELETE_LINK', payload: this.props.reduxState.language.setLink[i].id})
-        this.props.history.push('/')
-        }
-    }
+
+
     edit = () =>{
         this.props.history.push(`/edit/${this.props.match.params.id}`);
     }
@@ -55,24 +58,14 @@ class LanguageView extends Component{
             }
         });
     }
-    addNewLink = event => {
-        event.preventDefault();
-        this.props.dispatch({ type: 'POST_LINKS', payload: this.state.newLink})
-        this.props.history.push('/');
-    }
+
 
 
     componentDidMount(){
         this.getLanguage();
         this.getLinks();
     }
-    componentDidUpdate(prevProps){
-        if(this.props.reduxState !== prevProps.reduxState){
-            console.log('checking component did Update')
-            this.getLanguage();
-            this.getLinks();
-        }
-    }
+  
     render(){
         return(
         <div>
@@ -88,23 +81,15 @@ class LanguageView extends Component{
         <h3> {this.state.Language.notes}</h3>
         </div>
         <br></br>
-        <div class="ui segment">
         <h3>Useful Links</h3>
         <input type='text' placeholder="Add A Link" value={this.state.newLink.link} onChange={(event)=>this.handleNameChange(event, 'link')}/>
         <button onClick={this.addNewLink}>Add Link +</button>
-        </div>
         
-        <div class="ui link list">
-            {this.props.reduxState.language.setLink.map((link, index)=>{
-                return <div class="active item"><a class="huge item">{link.links}</a><button class="ui negative button" onClick={()=>{this.deleteLink(index)}}>Delete</button></div>
-            })}
-        </div>
         <button class="ui fluid button" onClick={()=>{this.props.history.push('/')}}>Back</button>
         <br></br>
         <button class="ui primary fluid button" onClick={this.edit} >Edit</button>
         <br></br>
         <button class="ui negative fluid button" onClick={this.deleteLanguage}>Delete</button>
-
         </div>
         )
     }

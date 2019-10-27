@@ -7,6 +7,9 @@ class EditLanguage extends Component{
 
     state = {
         Language: { },
+        Links: {
+            link: '',
+        },
     }
 
 
@@ -23,9 +26,16 @@ class EditLanguage extends Component{
                  console.log('error in /api/langauges/', error)
              })
          }
-
+getLinks = () =>{
+    this.props.dispatch({ type: 'FETCH_LINKS', payload: this.props.match.params.id})
+    this.setState({
+        Links: this.props.reduxState.language.setLink
+    })
+}
 componentDidMount(){
     this.getLanguage();
+    this.getLinks();
+    console.log('logging links', this.state.Language.links)
 }
 
 
@@ -40,7 +50,6 @@ handleChange = (event, propertyName ) =>{
 handleSubmit = () =>{
     if(window.confirm('Are you sure you want to make these changes?')){
     this.props.dispatch({ type: 'UPDATE_LANGUAGE', payload: this.state.Language}); 
-    // this.props.history.push(`/edit/${this.props.match.params.id}`)
     this.props.history.push(`/languages/${this.state.Language.id}`)
     }
 }
@@ -62,7 +71,7 @@ handleSubmit = () =>{
                 <p>Notes</p>
                 <textarea onChange={(event)=>this.handleChange( event, 'notes' )} value={this.state.Language.notes}/>
                 <br></br>
-                <textarea onChange={(event)=>this.handleChange( event, 'links' )} value={this.state.Language.links}/>
+                <textarea onChange={(event)=>this.handleChange( event, 'links' )} value={this.state.Links.link}/>
                 <button onClick = {this.handleSubmit}>Submit Changes</button>
                 <button onClick={()=>this.props.history.push(`/languages/${this.state.Language.id}`)}>Back</button>
             </div>

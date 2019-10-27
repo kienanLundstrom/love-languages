@@ -18,6 +18,8 @@ import './App.css';
 import LangList from '../LanguageList/LanguageList';
 import NewLanguageForm from '../NewLanguageForm/NewLanguageForm';
 import EditLanguage from '../EditLanguage/EditLanguage';
+import purpleRain from '../fallingRain/fallingRain';
+import P5Wrapper from 'react-p5-wrapper';
 
 class App extends Component {
   componentDidMount () {
@@ -29,6 +31,11 @@ class App extends Component {
       <Router>
         <div>
           <Nav />
+          <div className='purpleRain'>
+          <P5Wrapper
+                  sketch={purpleRain}>
+          </P5Wrapper>
+          </div>
           <Switch>
             {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
             <Redirect exact from="/" to="/home" />

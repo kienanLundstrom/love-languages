@@ -5,7 +5,7 @@ const router = express.Router();
 // Get all languages that have been stored in the database, populate with collection of data
 router.get('/', (req, res) => {
 // find all languages and return them
-pool.query(`SELECT * FROM "language";`).then((result)=>{
+pool.query(`SELECT * FROM "language" ORDER BY "comfort" ASC;`).then((result)=>{
     res.send(result.rows);
     }).catch((error)=>{
         console.log('error in getLangRouter', error)

@@ -52,6 +52,8 @@ class NewLanguageForm extends Component{
                     <input class="ui positive button" type='submit' value='Add New Language'/>
                     </div>
                 </form>
+                <button onClick={()=>this.props.history.push('/')}>Back to Languages</button>
+
             </div>
         )
     }
