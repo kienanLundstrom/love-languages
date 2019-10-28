@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Axios from 'axios';
 import { withRouter } from 'react-router-dom';
-import { Segment } from 'semantic-ui-react';
+import { Segment, Input } from 'semantic-ui-react';
 import './LangView.css';
 
 class LanguageView extends Component{
@@ -14,6 +14,10 @@ class LanguageView extends Component{
            lang_id: this.props.match.params.id,
            user_id: this.props.reduxState.user.id,
        },
+    toggleEdit: false,
+    selectedLink: '',
+    selectedId: 0,
+    toggleSave: false,
 
    }
    addNewLink = event => {
@@ -69,20 +73,64 @@ class LanguageView extends Component{
             return 'Love language'
         }
     }
-
-
+    comfortColor =(string) =>{
+        if(string===1){
+            return 'red'
+        } else if(string===2){
+            return 'orange'
+        } else if (string===3){
+            return 'green'
+        }
+    }
+    saveLink = (i) =>{
+        console.log(i)
+    }
+    deleteLink = (i) =>{
+    
+        if(window.confirm('Are you sure you that like you totally want to delete this?')){
+        this.props.dispatch({ type: 'DELETE_LINK', payload: this.props.reduxState.language.setLink[i].id})
+        this.props.history.push('/')
+        }
+    }
+    editLink = (link, i) =>{
+        this.setState({
+            toggleEdit: true,
+            selectedLink: link,
+            selectedId: i,
+            toggleSave: true,
+        })
+     }
+     
+     handleCancel = () =>{
+         this.setState({
+             toggleEdit: false,
+             toggleSave: false,
+         })
+      }
+      handleEditLink = (event) => {
+         this.setState({
+             selectedLink: event.target.value, 
+             
+         });
+     }
     componentDidMount(){
         this.getLanguage();
         this.getLinks();
+
     }
-  
+
     render(){
         return(
         <div className='langInfo'>
             <Segment inverted textAlign='center'>
                 <h1 class="ui header">{this.state.Language.name}</h1>
+                <div className='buttons'>
+                <button class="ui fluid button" onClick={()=>{this.props.history.push('/')}}>Back to all langauges</button>
+                <button class="ui fluid primary button" onClick={this.edit} >Edit this langauge</button>
+                <button class="ui fluid negative button" onClick={this.deleteLanguage}>Delete this Language</button>
+                </div>
             </Segment>
-        <Segment inverted textAlign='center'>
+        <Segment inverted color={this.comfortColor(this.state.Language.comfort)} textAlign='center'>
         <h3>Comfort Level</h3>
         <h4>{this.comfortString(this.state.Language.comfort)}</h4>
         </Segment>
@@ -91,20 +139,25 @@ class LanguageView extends Component{
         <h3>Notes</h3>
         <h5> {this.state.Language.notes}</h5>
         </Segment>
-        <br></br>
 
         <div className='links'>
-        <h3>Useful Links</h3>
-        <input type='text' placeholder="Add A Link" value={this.state.newLink.link} onChange={(event)=>this.handleNameChange(event, 'link')}/>
-        <button onClick={this.addNewLink}>Add Link +</button>
+        <Segment inverted textAlign='center'>
+        <h2>Useful Links</h2>
+        <Input type='text' placeholder="Add A Link" value={this.state.newLink.link} onChange={(event)=>this.handleNameChange(event, 'link')}/>
+        <button class="ui positive button" onClick={this.addNewLink}>Add Link +</button>
+        <div class="ui link list">
+            {this.props.reduxState.language.setLink.map((link, index)=>{
+                return <div class="active item">{!this.state.toggleEdit && <a><h3>{link.links}</h3></a>}
+                {this.state.toggleEdit && this.state.selectedId===index && <input onChange={this.handleEditLink} value={this.state.selectedLink}></input>}
+                {!this.state.toggleSave && <button class="ui negative mini button" onClick={()=>{this.deleteLink(index)}}>Delete</button>}
+                {this.state.toggleSave && <button class="ui positive mini button" onClick={()=>{this.saveLink(index)}}>Save</button>}
+                {!this.state.toggleEdit && <button class="ui button mini" onClick={()=>{this.editLink(link.links, index)}}>Edit</button>}
+                {this.state.toggleEdit && <button class="ui button mini" onClick={()=>{this.handleCancel(link.links, index)}}>Cancel</button>}
+                </div>
+            })}
         </div>
+        </Segment>
 
-        <div className='buttons'>
-        <button class="ui button" onClick={()=>{this.props.history.push('/')}}>Back</button>
-        
-        <button class="ui primary button" onClick={this.edit} >Edit</button>
-        
-        <button class="ui negative button" onClick={this.deleteLanguage}>Delete</button>
         </div>
         </div>
         )

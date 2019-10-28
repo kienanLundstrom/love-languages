@@ -24,7 +24,7 @@ export default function sketch (p) {
        }
        fall(){
            this.y = this.y + this.speed
-           this.speed = this.speed + 0.01
+           this.speed = this.speed + .000000000000000005
            if(this.y > p.height){
                this.y = p.random(-200, -100)
                this.speed = p.map(this.z, 0, 20, 4, 10)

@@ -49,11 +49,15 @@ class NewLanguageForm extends Component{
                     <br></br>
                     <label>Notes About this language</label>
                     <input type='text' placeholder="Notes" value={this.state.newLanguage.notes} onChange={(event)=>this.handleNameChange(event, 'notes')}/>
+                   <div className='buttons'>
                     <input class="ui positive button" type='submit' value='Add New Language'/>
                     </div>
+                    </div>
                 </form>
-                <button onClick={()=>this.props.history.push('/')}>Back to Languages</button>
-
+                <br></br>
+                <div className='buttons'>
+                <button class='ui button' onClick={()=>this.props.history.push('/')}>Back to all Languages</button>
+                </div>
             </div>
         )
     }

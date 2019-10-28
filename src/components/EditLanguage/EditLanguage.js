@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {withRouter} from 'react-router';
 import Axios from 'axios';
+import { Segment, Form, TextArea } from 'semantic-ui-react';
+import swal from 'sweetalert';
 
 class EditLanguage extends Component{
 
@@ -13,7 +15,6 @@ class EditLanguage extends Component{
     }
 
 
- 
      getLanguage = () =>{
          this.props.dispatch({ type: 'ONE_LANGUAGE', payload: this.props.match.params.id })
          Axios.get('/api/languages/' + [this.props.match.params.id])
@@ -38,7 +39,6 @@ componentDidMount(){
     console.log('logging links', this.state.Language.links)
 }
 
-
 handleChange = (event, propertyName ) =>{
     this.setState({
         Language: {
@@ -48,32 +48,59 @@ handleChange = (event, propertyName ) =>{
     })
 }
 handleSubmit = () =>{
-    if(window.confirm('Are you sure you want to make these changes?')){
-    this.props.dispatch({ type: 'UPDATE_LANGUAGE', payload: this.state.Language}); 
-    this.props.history.push(`/languages/${this.state.Language.id}`)
-    }
+    swal({
+        title: "Are you sure?",
+        text: "This will save your changes and previous information will be updated",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+            {
+                this.props.dispatch({ type: 'UPDATE_LANGUAGE', payload: this.state.Language}); 
+                this.props.history.push(`/languages/${this.state.Language.id}`)
+                }
+          swal("Poof! Your language has been updated!", {
+            icon: "success",
+            
+          });
+        } else {
+          swal("Your language has no changes");
+        }
+      });
 }
+
+
 
     render(){
         return(
             <div>
-                <p>Name</p>
-                <textarea onChange={(event)=>this.handleChange( event, 'name' )} value={this.state.Language.name}/>
+                <Segment inverted textAlign='center'>
+                <h2>Name of Language</h2>
+                <Form>
+                <TextArea rows='1' onChange={(event)=>this.handleChange( event, 'name' )} value={this.state.Language.name} />
                 <br></br>
-                <p>Comfort</p>
-                {/* <textarea onChange={(event)=>this.handleChange( event, 'comfort' )} value={this.state.Language.comfort}/> */}
+                </Form>
+                </Segment>
+                <Segment inverted color={this.state.Language.comfort} textAlign='center'>
+                <h3>Comfort Level</h3>
                 <select value={this.state.Language.comfort} onChange={(event)=>this.handleChange(event, 'comfort')}>
                         <option value='1'>Not very Comfortable</option>
                         <option value='2'>Comfortable</option>
                         <option value='3'>Very Comfortable</option>
                     </select>
-                <br></br>
-                <p>Notes</p>
-                <textarea onChange={(event)=>this.handleChange( event, 'notes' )} value={this.state.Language.notes}/>
-                <br></br>
-                <textarea onChange={(event)=>this.handleChange( event, 'links' )} value={this.state.Links.link}/>
-                <button onClick = {this.handleSubmit}>Submit Changes</button>
-                <button onClick={()=>this.props.history.push(`/languages/${this.state.Language.id}`)}>Back</button>
+                    </Segment>
+                <Segment inverted textAlign='center'>
+                <h3>Notes</h3>
+                <Form>
+                <TextArea rows='9'  onChange={(event)=>this.handleChange( event, 'notes' )} value={this.state.Language.notes} />
+                </Form>
+                </Segment>
+                <div className='buttons'>
+                <button class='ui positive button' onClick = {this.handleSubmit}>Submit Changes</button>
+                <button class='ui negative button' onClick={()=>this.props.history.push(`/languages/${this.state.Language.id}`)}>Back</button>
+                </div>
             </div>
         )
     }

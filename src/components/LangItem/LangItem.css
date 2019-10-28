@@ -1,7 +1,8 @@
 .ui.segment{
     width: 50%;
-    margin: 20px auto;
+    margin:20px auto;
     padding: 30px;
+    height: 20%;
 }
 .ui.cards>.card>.content>.header:not(.ui) {
     line-height: 150px;
@@ -14,4 +15,17 @@
 }
 .meta{
     text-align: center;
+}
+.ui.segment:first-child {
+    margin-top: 30px;
+}
+.ui.textarea{
+    width: 100%;
+}
+.ui.form.textarea{
+align-content: center;}
+
+form{
+    width:100%;
+    height: 25%;
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card} from 'semantic-ui-react'
+import { Card, CardContent } from 'semantic-ui-react'
 import { HashRouter as Router } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import './LangItem.css'
@@ -30,9 +30,9 @@ class LangItem extends Component{
 
         return(
             <Router>
-                <Card raised color={this.comfortColor(this.props.lang.comfort)} onClick={()=>this.props.history.push(`/languages/${this.props.lang.id}`)}
+                <Card color={this.comfortColor(this.props.lang.comfort)} onClick={()=>this.props.history.push(`/languages/${this.props.lang.id}`)}
                        header={this.props.lang.name}
-                        meta = {this.comfortString(this.props.lang.comfort)} >
+                        meta={this.comfortString(this.props.lang.comfort)} >
                  </Card>
             </Router>
         )
