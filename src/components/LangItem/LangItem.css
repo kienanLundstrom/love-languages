@@ -30,11 +30,11 @@ form{
     height: 25%;
 }
 .ui.cards>.red.card, .ui.red.card, .ui.red.cards>.card{
-   box-shadow: 0 0 0 1px black, 0 20px 0 0 #db2828, 0 1px 3px 0 black;
+   box-shadow: 0 0 0 1px red, 0 10px 0 0 #db2828, 0 10px 20px 0 red;
 }
 .ui.cards>.orange.card, .ui.orange.card, .ui.orange.cards>.card{
-    box-shadow: 0 0 0 1px black, 0 20px 0 0 orange, 0 1px 3px 0 black;
+    box-shadow: 0 0 0 1px orange, 0 10px 0 0 orange, 0 10px 20px 0 orange;
 }
 .ui.cards>.green.card, .ui.green.card, .ui.green.cards>.card{
-    box-shadow: 0 0 0 1px black, 0 20px 0 0 green, 0 1px 3px 0 black;
+    box-shadow: 0 0 0 1px green, 0 10px 0 0 green, 0 10px 20px 0 green;
 }

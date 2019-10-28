@@ -8,7 +8,7 @@ export default function sketch (p) {
        }
    }
    p.draw = function(){
-       p.background('#CB9FDB');
+       p.background('#BCAAD4');
        for(let i=0; i<drops.length; i++){
            drops[i].fall();
            drops[i].show();
