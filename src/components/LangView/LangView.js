@@ -4,6 +4,7 @@ import Axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import { Segment, Input } from 'semantic-ui-react';
 import './LangView.css';
+import swal from 'sweetalert';
 
 class LanguageView extends Component{
    state = {
@@ -44,12 +45,30 @@ class LanguageView extends Component{
         })
     }
     deleteLanguage = () =>{
-    if(window.confirm('Are you sure you that like you totally want to delete this?')){
-        this.props.dispatch({ type: 'DELETE_LINK', payload: this.props.match.params.id})
-        this.props.dispatch({ type: 'DELETE_LANGUAGES', payload: this.props.match.params.id})
-        this.props.history.push('/')
-        }
+        swal({
+            title: "Are you sure?",
+            text: "This will delete your language",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                {
+                    this.props.dispatch({ type: 'DELETE_LINK', payload: this.props.match.params.id})
+                    this.props.dispatch({ type: 'DELETE_LANGUAGES', payload: this.props.match.params.id})
+                    this.props.history.push('/')
+                    }
+              swal("Poof! Your language has been deleted!", {
+                icon: "success",
+                
+              });
+            } else {
+              swal("Your language lives another day");
+            }
+          });
     }
+ 
 
 
 
@@ -86,12 +105,29 @@ class LanguageView extends Component{
         console.log(i)
     }
     deleteLink = (i) =>{
-    
-        if(window.confirm('Are you sure you that like you totally want to delete this?')){
-        this.props.dispatch({ type: 'DELETE_LINK', payload: this.props.reduxState.language.setLink[i].id})
-        this.props.history.push('/')
-        }
+        swal({
+            title: "Are you sure?",
+            text: "This will delete your link",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                {
+                    this.props.dispatch({ type: 'DELETE_LINK', payload: this.props.reduxState.language.setLink[i].id})
+                    this.props.history.push('/')
+                    }
+              swal("Poof! Your link has been deleted!", {
+                icon: "success",
+                
+              });
+            } else {
+              swal("Your link lives another day");
+            }
+          });
     }
+     
     editLink = (link, i) =>{
         this.setState({
             toggleEdit: true,

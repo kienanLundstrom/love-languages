@@ -30,10 +30,12 @@ class LangItem extends Component{
 
         return(
             <Router>
+                
                 <Card color={this.comfortColor(this.props.lang.comfort)} onClick={()=>this.props.history.push(`/languages/${this.props.lang.id}`)}
                        header={this.props.lang.name}
                         meta={this.comfortString(this.props.lang.comfort)} >
                  </Card>
+                
             </Router>
         )
     }
