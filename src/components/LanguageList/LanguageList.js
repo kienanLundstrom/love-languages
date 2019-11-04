@@ -28,7 +28,7 @@ componentDidMount(){
                 </Card.Group>
                 </div>
                 <div className='buttons'>
-                <button class='ui massive green button' onClick={()=>this.props.history.push(`/addNewLanguage`)}>+ New Language</button>
+                <button class='ui massive purple button' onClick={()=>this.props.history.push(`/addNewLanguage`)}>+ New Language</button>
                 </div>
         </div>
         )

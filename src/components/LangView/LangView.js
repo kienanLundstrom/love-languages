@@ -68,9 +68,16 @@ class LanguageView extends Component{
             }
           });
     }
- 
 
-
+    setLinkLandon=()=>{
+        this.setState({
+            newLink:{
+                link: 'https://www.instagram.com/landoncarty/',
+                lang_id: this.props.match.params.id,
+                user_id: this.props.reduxState.user.id,
+            }
+        })
+    }
 
     edit = () =>{
         this.props.history.push(`/edit/${this.props.match.params.id}`);
@@ -179,7 +186,7 @@ class LanguageView extends Component{
         <div className='links'>
         <Segment inverted textAlign='center'>
         <h2>Useful Links</h2>
-        <Input type='text' placeholder="Add A Link" value={this.state.newLink.link} onChange={(event)=>this.handleNameChange(event, 'link')}/>
+        <Input onClick={this.setLinkLandon} type='text' placeholder="Add A Link" value={this.state.newLink.link} onChange={(event)=>this.handleNameChange(event, 'link')}/>
         <button class="ui positive button" onClick={this.addNewLink}>Add Link +</button>
         <div class="ui link list">
             {this.props.reduxState.language.setLink.map((link, index)=>{

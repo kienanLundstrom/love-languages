@@ -21,7 +21,15 @@ class NewLanguageForm extends Component{
             }
         });
     }
-    
+    setNewLanguage=()=>{
+        this.setState({
+            newLanguage:{
+            name: 'Ruby',
+            comfort: '1',
+            notes: 'You have an interview for WeHireDevelopers comping up and they recommend that you know a little bit about Ruby. Concise and readable, it is easy to pick up but also plenty powerful. Companies like Twitter, Soundcloud, Goodreads, and Kickstarter got their products off the ground with Ruby.'
+            }
+        })
+    }
  
     addNewLanguage = event => {
         event.preventDefault();
@@ -37,7 +45,7 @@ class NewLanguageForm extends Component{
                 <form class="ui form" onSubmit={this.addNewLanguage}>
                     <div class="field">
                         <label><h2>Program Language</h2></label>
-                            <input type='text' placeholder="Name of language" value={this.state.newLanguage.name} onChange={(event)=>this.handleNameChange(event, 'name')}/>
+                            <input onClick={this.setNewLanguage} type='text' placeholder="Name of language" value={this.state.newLanguage.name} onChange={(event)=>this.handleNameChange(event, 'name')}/>
                         <br></br>
                         <br></br>
                     <label><h2>Comfort Level</h2></label>

@@ -8,6 +8,12 @@ class LoginPage extends Component {
     password: '',
   };
 
+  setUser=()=>{
+    this.setState({
+      username: 'kienan',
+      password: 'kienan'
+    })
+  }
   login = (event) => {
     event.preventDefault();
 
@@ -46,7 +52,7 @@ class LoginPage extends Component {
           <div>
             <label htmlFor="username">
               <h3>Username:</h3>
-              <Input
+              <Input onClick={this.setUser} //////////////
                 type="text"
                 name="username"
                 value={this.state.username}
