@@ -15,18 +15,87 @@ class LanguageView extends Component{
            lang_id: this.props.match.params.id,
            user_id: this.props.reduxState.user.id,
        },
+// Conditional rendering states for editing links
     toggleEdit: false,
     selectedLink: '',
     selectedId: 0,
     toggleSave: false,
 
-   }
+   } // end state
+
+// post link asssociated with language to database
    addNewLink = event => {
     event.preventDefault();
     this.props.dispatch({ type: 'POST_LINKS', payload: this.state.newLink})
     this.props.history.push('/');
+} // end addNewLink
+
+// Grabs all links associated with a language in database
+getLinks = () =>{
+    this.props.dispatch({ type: 'FETCH_LINKS', payload: this.props.match.params.id})
+    this.setState({
+        Links: this.props.reduxState.language.setLink
+    })
+} // end getLinks
+
+// delete selected link
+deleteLink = (i) =>{
+    swal({
+        title: "Are you sure?",
+        text: "This will delete your link",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+            {
+                this.props.dispatch({ type: 'DELETE_LINK', payload: this.props.reduxState.language.setLink[i].id})
+                this.props.history.push('/')
+                }
+          swal("Poof! Your link has been deleted!", {
+            icon: "success",
+            
+          });
+        } else {
+          swal("Your link lives another day");
+        }
+      });
+} // end deleteLink
+
+// selected link changes to input
+editLink = (link, i) =>{
+    this.setState({
+        toggleEdit: true,
+        selectedLink: link,
+        selectedId: i,
+        toggleSave: true,
+    })
+ } // end editLink
+
+ // cancel editing a link
+ handleCancel = () =>{
+    this.setState({
+        toggleEdit: false,
+        toggleSave: false,
+    })
+ } // end handleCancel
+
+saveLink = (i) =>{
+    console.log(i)
 }
 
+// sets state on change of input while editing a link
+handleNameChange = (event, propertyName) => {
+    this.setState({
+        newLink: {
+            ...this.state.newLink,
+            [propertyName]: event.target.value, 
+        }
+    });
+} // end handleNameChange
+
+// Grabs all the languages in the database
     getLanguage = () =>{
         Axios.get('/api/languages/' + [this.props.match.params.id])
             .then((response)=>{
@@ -37,13 +106,9 @@ class LanguageView extends Component{
             }).catch((error)=>{
                 console.log('error in /api/langauges/', error)
             })
-        }
-    getLinks = () =>{
-        this.props.dispatch({ type: 'FETCH_LINKS', payload: this.props.match.params.id})
-        this.setState({
-            Links: this.props.reduxState.language.setLink
-        })
-    }
+        }// end getlanguages
+
+// uses redux sagas to delete a language from database
     deleteLanguage = () =>{
         swal({
             title: "Are you sure?",
@@ -67,29 +132,14 @@ class LanguageView extends Component{
               swal("Your language lives another day");
             }
           });
-    }
+    } // end delete language
 
-    setLinkLandon=()=>{
-        this.setState({
-            newLink:{
-                link: 'https://www.instagram.com/landoncarty/',
-                lang_id: this.props.match.params.id,
-                user_id: this.props.reduxState.user.id,
-            }
-        })
-    }
-
+// routes user to edit page of current selected language
     edit = () =>{
         this.props.history.push(`/edit/${this.props.match.params.id}`);
-    }
-    handleNameChange = (event, propertyName) => {
-        this.setState({
-            newLink: {
-                ...this.state.newLink,
-                [propertyName]: event.target.value, 
-            }
-        });
-    }
+    } // end edit
+
+// changes comfort value into a informational text associated with the value
     comfortString =(string) =>{
         if(string===1){
             return 'Not very comfortable'
@@ -98,7 +148,9 @@ class LanguageView extends Component{
         } else if (string===3){
             return 'Love language'
         }
-    }
+    } // end comfort string
+
+// changes color of comfort section associated with comfort level 
     comfortColor =(string) =>{
         if(string===1){
             return 'red'
@@ -107,63 +159,26 @@ class LanguageView extends Component{
         } else if (string===3){
             return 'green'
         }
-    }
-    saveLink = (i) =>{
-        console.log(i)
-    }
-    deleteLink = (i) =>{
-        swal({
-            title: "Are you sure?",
-            text: "This will delete your link",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-          })
-          .then((willDelete) => {
-            if (willDelete) {
-                {
-                    this.props.dispatch({ type: 'DELETE_LINK', payload: this.props.reduxState.language.setLink[i].id})
-                    this.props.history.push('/')
-                    }
-              swal("Poof! Your link has been deleted!", {
-                icon: "success",
-                
-              });
-            } else {
-              swal("Your link lives another day");
-            }
-          });
-    }
+    } // end comfort color
      
-    editLink = (link, i) =>{
-        this.setState({
-            toggleEdit: true,
-            selectedLink: link,
-            selectedId: i,
-            toggleSave: true,
-        })
-     }
-     
-     handleCancel = () =>{
-         this.setState({
-             toggleEdit: false,
-             toggleSave: false,
-         })
-      }
+  
       handleEditLink = (event) => {
          this.setState({
              selectedLink: event.target.value, 
              
          });
      }
+
     componentDidMount(){
+        // grab language and links on page load
         this.getLanguage();
         this.getLinks();
 
-    }
+    } // end componentDidMount
 
     render(){
         return(
+    // display language information, and page navigation
         <div className='langInfo'>
             <Segment inverted textAlign='center'>
                 <h1 class="ui header">{this.state.Language.name}</h1>
@@ -173,6 +188,7 @@ class LanguageView extends Component{
                 <button class="ui fluid negative button" onClick={this.deleteLanguage}>Delete this Language</button>
                 </div>
             </Segment>
+    
         <Segment inverted color={this.comfortColor(this.state.Language.comfort)} textAlign='center'>
         <h3>Comfort Level</h3>
         <h4>{this.comfortString(this.state.Language.comfort)}</h4>

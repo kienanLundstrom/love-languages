@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-
-
-
 class NewLanguageForm extends Component{
     state = {
         newLanguage: {
@@ -13,6 +10,8 @@ class NewLanguageForm extends Component{
             user: this.props.reduxState.user.id,
         },
     }
+
+// grabs users inputs for new language and stores in local state    
     handleNameChange = (event, propertyName) => {
         this.setState({
             newLanguage: {
@@ -20,22 +19,14 @@ class NewLanguageForm extends Component{
                 [propertyName]: event.target.value, 
             }
         });
-    }
-    setNewLanguage=()=>{
-        this.setState({
-            newLanguage:{
-            name: 'Ruby',
-            comfort: '1',
-            notes: 'You have an interview for WeHireDevelopers comping up and they recommend that you know a little bit about Ruby. Concise and readable, it is easy to pick up but also plenty powerful. Companies like Twitter, Soundcloud, Goodreads, and Kickstarter got their products off the ground with Ruby.'
-            }
-        })
-    }
- 
+    } // end handleNameChange
+
+// uses saga to add new language to database
     addNewLanguage = event => {
         event.preventDefault();
         this.props.dispatch({ type: 'POST_LANGUAGES', payload: this.state.newLanguage})
         this.props.history.push('/');
-    }
+    } // end addNewLanguage
 
 
 

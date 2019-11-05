@@ -14,7 +14,7 @@ class EditLanguage extends Component{
         },
     }
 
-
+// axios request to grab the seleced language from database
      getLanguage = () =>{
          this.props.dispatch({ type: 'ONE_LANGUAGE', payload: this.props.match.params.id })
          Axios.get('/api/languages/' + [this.props.match.params.id])
@@ -26,19 +26,17 @@ class EditLanguage extends Component{
              }).catch((error)=>{
                  console.log('error in /api/langauges/', error)
              })
-         }
-getLinks = () =>{
-    this.props.dispatch({ type: 'FETCH_LINKS', payload: this.props.match.params.id})
-    this.setState({
-        Links: this.props.reduxState.language.setLink
-    })
-}
-componentDidMount(){
-    this.getLanguage();
-    this.getLinks();
-    console.log('logging links', this.state.Language.links)
-}
+         } // end getLanguage
+         
+// grabs all links using a saga associated with this language
+        getLinks = () =>{
+            this.props.dispatch({ type: 'FETCH_LINKS', payload: this.props.match.params.id})
+            this.setState({
+                Links: this.props.reduxState.language.setLink
+            })
+        } // end getLinks 
 
+// sets state for changes made to the language
 handleChange = (event, propertyName ) =>{
     this.setState({
         Language: {
@@ -46,7 +44,9 @@ handleChange = (event, propertyName ) =>{
             [propertyName]: event.target.value,
         }
     })
-}
+} // end handleChange
+
+// asks if the user wants to save the changes they made, then uses a saga to update the language
 handleSubmit = () =>{
     swal({
         title: "Are you sure?",
@@ -69,8 +69,13 @@ handleSubmit = () =>{
           swal("Your language has no changes");
         }
       });
-}
+} // end handleSubmit
 
+componentDidMount(){
+    this.getLanguage();
+    this.getLinks();
+    console.log('logging links', this.state.Language.links)
+}
 
 
     render(){

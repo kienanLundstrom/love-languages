@@ -6,15 +6,17 @@ import { Card } from 'semantic-ui-react';
 import "./LanguageList.css";
 
 class LangList extends Component{
-    
+// grabs all languages from database using saga
     getLang = () =>{
         this.props.dispatch({ type: 'FETCH_LANGUAGES'})
-    }
+    } // end getlang
+
 componentDidMount(){
     this.getLang();
 }
     render(){
         return(
+// map through languages and display wit cards using semantic-ui       
         <div>
             <div className="cardG">
             <Card.Group textAlign="left">
