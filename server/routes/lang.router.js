@@ -13,7 +13,7 @@ pool.query(`SELECT * FROM "language" ORDER BY "comfort" ASC;`).then((result)=>{
     })
 });
 
-
+// grabs all languages from database
 router.get('/:id', (req, res) => {
     // find all languages and return them
     pool.query(`SELECT * FROM "language" where "id" = $1;`, [req.params.id]).then((result)=>{
@@ -22,9 +22,9 @@ router.get('/:id', (req, res) => {
             console.log('select all from language error', error)
             res.sendStatus(500);
         })
-    });
+    }); // router get
   
-
+// delte query for deleting a language
     router.delete('/:id', (req, res)=> {
         const queryText = 'DELETE FROM language WHERE id=$1';
         pool.query(queryText, [req.params.id])
@@ -35,6 +35,7 @@ router.get('/:id', (req, res) => {
     });
     })
 
+// adds a new language to the database
 router.post('/', (req, res) => {
     const newLanguage = req.body;
     const queryText = `INSERT INTO language ("name", "comfort", "notes", "user_id")
@@ -52,8 +53,9 @@ router.post('/', (req, res) => {
         console.log('error in router . post for languages', err);
         res.sendStatus(500);
       });
-  });
+  }); // end routerPost
 
+  // update route for language
   router.put('/', (req, res) => {
     const updatedLanguage = req.body;
   
@@ -72,5 +74,6 @@ router.post('/', (req, res) => {
         console.log('Error completing SELECT languages2 query', err);
         res.sendStatus(500);
       });
-  });
+  });// end routerPut
+
 module.exports = router;

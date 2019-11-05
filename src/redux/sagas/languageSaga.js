@@ -1,6 +1,7 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import Axios from 'axios';
 
+// get request for languages
 function* fetchLanguages(){
     try{
         const response = yield Axios.get('/api/languages')
@@ -8,7 +9,9 @@ function* fetchLanguages(){
     }catch (error){
         console.log( 'error in fetchLanguages saga', error)
     }
-}
+} // end fetchLanguages
+
+// get request for links 
 function* fetchLinks(action){
     try{
         const response = yield Axios.get('/api/links/' + action.payload);
@@ -16,8 +19,9 @@ function* fetchLinks(action){
     }catch (error){
         console.log( 'error in fetchLinks saga', error)
     }
-}
+} // end fetchLinks
 
+// post request for links to database
 function* postLinks(action){
     try{
         yield Axios.post('/api/links', action.payload)
@@ -25,8 +29,9 @@ function* postLinks(action){
     }catch (error){
         console.log(error)
     }
-}
+} // end postLinks
 
+// post request for new language
 function* postLanguages(action){
     try{
         yield Axios.post('/api/languages', action.payload)
@@ -34,7 +39,9 @@ function* postLanguages(action){
     }catch (error){
         console.log(error)
     }
-}
+} // end postLanguages
+
+// put request for upodating a language
 function* updateLanguage(action){
     try {
       yield Axios.put('/api/languages', action.payload);
@@ -43,7 +50,9 @@ function* updateLanguage(action){
     } catch (err){
       console.log('PUT ERROR:',err);
     }
-  }
+  } // end updateLanguage
+
+// delete request for language
 function* deleteLanguages(action){
     try{
         yield Axios.delete('/api/languages/' + action.payload)
@@ -51,16 +60,16 @@ function* deleteLanguages(action){
     }catch (error){
         console.log(error)
     }
-}
+} // end deleteLanguages
 
+// delete request for link
 function* deleteLink(action){
     try{
-        console.log('ligma  balls', action)
         yield Axios.delete('/api/links/' + action.payload)
     }catch (error){
         console.log(error)
     }
-}
+} // end deleteLink
 
 
 
@@ -78,12 +87,5 @@ function* languageSaga(){
         console.log(error)
     }
 }
-
-
-
-
-
-
-
 
 export default languageSaga;

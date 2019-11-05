@@ -2,6 +2,7 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 
+// get links query for selected language
 router.get('/:id', (req, res)=>{
     const queryText = `SELECT * FROM "link" WHERE "lang_id" = $1;`;
     pool.query(queryText, [req.params.id]).then((result)=>{
@@ -10,8 +11,9 @@ router.get('/:id', (req, res)=>{
         console.log('error in get link router', error)
         res.sendStatus(500);
     })
-})
+}) // end router get
 
+// adds a new link to selected language
 router.post('/', (req, res) => {
     const newLink = req.body;
     const queryText = `INSERT INTO link ("links", "lang_id", "user_id") VALUES ($1, $2, $3);`;
@@ -27,8 +29,9 @@ router.post('/', (req, res) => {
         console.log('error in router . post for links', err);
         res.sendStatus(500);
       });
-})
+}) // end router post
 
+// delete route for selected link
 router.delete('/:id', (req, res)=> {
     const queryText = 'DELETE FROM link WHERE "id"=$1;';
     console.log('delete req.params', req.params.id)
@@ -37,7 +40,7 @@ router.delete('/:id', (req, res)=> {
 .catch((err) => {
     console.log(err)
     res.sendStatus(500);
-});
-})
+    });
+}) // end delete route
 
 module.exports = router;
