@@ -24,6 +24,26 @@ CREATE TABLE "user" (
     "username" VARCHAR (80) UNIQUE NOT NULL,
     "password" VARCHAR (1000) NOT NULL
 );
+CREATE TABLE "language" (
+	"id" SERIAL PRIMARY KEY,
+	"name" VARCHAR (50) ,
+	"comfort" INTEGER,
+	"notes" VARCHAR (800),
+	"user_id" INT REFERENCES "user"
+	);
+SELECT * FROM "language";
+
+CREATE TABLE "link" (
+	"id" SERIAL PRIMARY KEY,
+	"links" VARCHAR (200),
+	"lang_id" INT REFERENCES "language" ON DELETE CASCADE,
+	"user_id" INT REFERENCES "user" 
+	);
+CREATE TABLE "project" (
+	"id" SERIAL PRIMARY KEY,
+	"projects" VARCHAR (300),
+	"lang_id" INT REFERENCES "language"
+	);
 ```
 
 
@@ -39,13 +59,6 @@ CREATE TABLE "user" (
 * Run `npm run client`
 * Navigate to `localhost:3000`
 
-
-
-## Testing Routes with Postman
-
-To use Postman with this repo, you will need to set up requests in Postman to register a user and login a user at a minimum. 
-
-Keep in mind that once you using the login route, Postman will manage your session cookie for you just like a browser, ensuring it is sent with each subsequent request. If you delete the `localhost` cookie in Postman, it will effectively log you out.
 
 ## Lay of the Land
 
